@@ -1,0 +1,57 @@
+# ruff.toml
+
+line-length = 100
+target-version = "py313"
+src = ["src", "tests"]
+
+# Exclude generated/vendor code from linting
+extend-exclude = [
+    "migrations",
+    "__pycache__",
+    ".venv",
+    "build",
+    "dist",
+]
+
+[lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes (unused imports, undefined names...)
+    "I",    # isort — import sorting and grouping
+    "UP",   # pyupgrade — modern Python idioms (e.g. f-strings over .format)
+    "B",    # flake8-bugbear — common, subtle bugs
+    "SIM",  # flake8-simplify — logic simplification
+    "C4",   # flake8-comprehensions — better list/dict/set comprehensions
+    "N",    # pep8-naming — naming conventions
+    "S",    # flake8-bandit — security issues (e.g. eval, hardcoded passwords)
+    "PTH",  # flake8-use-pathlib — pathlib over os.path
+    "RUF",  # Ruff-specific rules
+    "ASYNC",# flake8-async — bugs in async code
+    "PERF", # perflint — performance antipatterns
+]
+
+ignore = [
+    "S101",    # allow assert (useful in tests)
+]
+
+# Allow all rules to be auto-fixed where it's safe to do so
+fixable = ["ALL"]
+
+[lint.per-file-ignores]
+# Tests don't need to flag "magic" values (fixture secrets, mock passwords)
+"tests/**/*.py" = ["S101", "S105", "S106"]
+
+[lint.isort]
+known-first-party = ["your_package_name"]
+combine-as-imports = true
+
+[lint.pydocstyle]
+convention = "google"
+
+[format]
+quote-style = "single"
+indent-style = "space"
+skip-magic-trailing-comma = false
+docstring-code-format = true
+docstring-code-line-length = 80
