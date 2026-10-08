@@ -11,5 +11,5 @@ wheels/
 .venv
 
 # Streamlit
-.streamlit
+.streamlit/secrets.toml
 credentials.json

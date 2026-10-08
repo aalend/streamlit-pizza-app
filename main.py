@@ -8,7 +8,12 @@ st.set_page_config(page_title='PizzaCalc', page_icon=':pizza:', layout='wide')
 
 @st.cache_resource
 def init_gspread():
-    client = gspread.service_account('credentials.json')
+    if 'gcp_service_account' in st.secrets:
+        creds = dict(st.secrets['gcp_service_account'])
+        client = gspread.service_account_from_dict(creds)
+    else:
+        client = gspread.service_account('credentials.json')
+
     table = client.open('pizza_db')
     return table.worksheet('recipes')
 
